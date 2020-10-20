@@ -1,0 +1,33 @@
+/*Given an array of strings arr. String s is a concatenation of a sub-sequence of arr which have unique characters.
+Return the maximum possible length of s.
+Input: arr = ["un","iq","ue"]
+Output: 4
+
+Explanation: All possible concatenations are "","un","iq","ue","uniq" and "ique".
+Maximum length is 4.
+*/
+<?php 
+function maxLength($arr) {
+    $n = count($arr);
+    $N = 2 ** $n;
+    
+    $max = 0;
+    for ($i = 0; $i < $N; $i++) {
+        $data = [];
+        for ($j = 0; $j < $n; $j++) {
+            if ($i & (1 << $j)) {
+                $data [] = $arr[$j];
+            }
+        }
+        
+        $s = implode("",$data);
+        if (implode("",array_unique(str_split($s))) == $s) {
+            $max = max(strlen($s),$max);
+        }
+    }
+    return $max;
+}
+
+$arr = ["un","iq","ue"];
+maxLength($arr);
+?>
